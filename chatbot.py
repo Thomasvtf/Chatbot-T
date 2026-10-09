@@ -40,6 +40,9 @@ def responder(mensaje: str) -> str:
       return "Los niveles de formación son:\n -Técnico\n -Tecnológico"
     if "conocer mas" in texto:
       return "¡Claro! Aquí podras conocer más información detallada en el blog del Centro para la Industria de la Comunicación Gráfica.\nhttps://comunicaciongraficasena.blogspot.com/"
+    if any(inscripcion in texto for inscripcion in ("inscripcion", "inscribir", "inscripciones", "inscribo")):
+      return "Para inscribirte a nuestros programas, debes realizar el proceso formal a través de la plataforma oficial del SENA. \nhttps://betowa.sena.edu.co/"
+    
     return f"Entiendo. Cuéntame un poco más sobre: «{mensaje.strip()}»"
 
 
