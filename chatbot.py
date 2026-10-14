@@ -1,6 +1,7 @@
 """Chatbot básico con API HTTP y una interfaz web mínima."""
 
 from typing import Dict, List
+import unicodedata
 
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
@@ -18,31 +19,83 @@ class ChatResponse(BaseModel):
     reply: str
 
 
+def normalizar(texto: str) -> str:
+    """Elimina tildes, convierte a minúsculas y quita espacios extra."""
+    texto = texto.lower().strip()
+    texto = unicodedata.normalize("NFD", texto)
+    return "".join(
+        caracter for caracter in texto if unicodedata.category(caracter) != "Mn"
+    )
+
+
 def responder(mensaje: str) -> str:
     """Genera una respuesta por reglas; reemplaza esta función para usar un LLM."""
-    texto = mensaje.strip().lower()
+    texto = normalizar(mensaje)
+
+    if not texto:
+        return "Por favor, escribe un mensaje antes de enviarlo."
 
     if any(saludo in texto for saludo in ("hola", "buenas", "hey", "que tal")):
         return "¡Hola! ¿En qué puedo ayudarte?"
+        
     if "nombre" in texto:
         return "Soy un chatbot básico hecho con Python."
-    if any(palabra in texto for palabra in ("adiós", "chao", "hasta luego")):
+        
+    if any(palabra in texto for palabra in ("adios", "chao", "hasta luego")):
         return "¡Hasta luego! Que tengas un buen día."
+        
     if "ayuda" in texto:
         return "Puedo responder saludos y algunas preguntas sencillas. ¿Qué necesitas?"
-    if any (programa in texto for programa in("programas", "programa")):
-      return "Los programas disponibles son:\n1. Análisis y desarrollo de software.\n2. Animación 3D.\n3. Animación digital.\n4. Desarrollo de medios gráficos visuales.\n5. Desarrollo publicitario.\n6. Desarrollo de multimedia y web.\n7. Desarrollo de videojuegos.\n8. Coordinación de procesos logísticos."
+        
+    if any(programa in texto for programa in ("programas", "programa")):
+        return (
+            "Los programas disponibles son:\n"
+            "1. Análisis y desarrollo de software.\n"
+            "2. Animación 3D.\n"
+            "3. Animación digital.\n"
+            "4. Desarrollo de medios gráficos visuales.\n"
+            "5. Desarrollo publicitario.\n"
+            "6. Desarrollo de multimedia y web.\n"
+            "7. Desarrollo de videojuegos.\n"
+            "8. Coordinación de procesos logísticos."
+        )
+        
     if "codigo" in texto:
-      return "Aqui tienes el codigo de cada programa segun el número que tiene en la lista.\n1. 228118.\n2. 924118.\n3. 233101.\n4. 524704.\n5. 124100.\n6. 217320.\n7. 228108.\n8. 121523."
-    if any (modalidad in texto for modalidad in ("modalidad", "modalidades")):
-      return "Las modalidades disponibles son:\n-Presencial\n-Virtual"
+        return (
+            "Aquí tienes el código de cada programa según el número que tiene en la lista:\n"
+            "1. 228118.\n"
+            "2. 924118.\n"
+            "3. 233101.\n"
+            "4. 524704.\n"
+            "5. 124100.\n"
+            "6. 217320.\n"
+            "7. 228108.\n"
+            "8. 121523."
+        )
+        
+    if any(modalidad in texto for modalidad in ("modalidad", "modalidades")):
+        return "Las modalidades disponibles son:\n-Presencial\n-Virtual"
+        
     if "nivel" in texto:
-      return "Los niveles de formación son:\n -Técnico\n -Tecnológico"
+        return "Los niveles de formación son:\n -Técnico\n -Tecnológico"
+        
     if "conocer mas" in texto:
-      return "¡Claro! Aquí podras conocer más información detallada en el blog del Centro para la Industria de la Comunicación Gráfica.\nhttps://comunicaciongraficasena.blogspot.com/"
+        return (
+            "¡Claro! Aquí podrás conocer más información detallada en el blog del Centro "
+            "para la Industria de la Comunicación Gráfica.\n"
+            "https://comunicaciongraficasena.blogspot.com/"
+        )
+        
     if any(inscripcion in texto for inscripcion in ("inscripcion", "inscribir", "inscripciones", "inscribo")):
-      return "Para inscribirte a nuestros programas, debes realizar el proceso formal a través de la plataforma oficial del SENA. \nhttps://betowa.sena.edu.co/"
-    
+        return (
+            "Para inscribirte a nuestros programas, debes realizar el proceso formal "
+            "a través de la plataforma oficial del SENA.\n"
+            "https://betowa.sena.edu.co/"
+        )
+
+    if any(palabra in texto for palabra in ("costo", "precio", "cuanto vale", "cuanto cuesta", "gratis", "pagar")):
+        return "Toda la formación ofrecida por el SENA es totalmente gratuita."
+
     return f"Entiendo. Cuéntame un poco más sobre: «{mensaje.strip()}»"
 
 
