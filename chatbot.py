@@ -3,8 +3,11 @@
 from typing import Dict, List
 import unicodedata
 
+# pyrefly: ignore[missing-import]
 from fastapi import FastAPI
+# pyrefly: ignore[missing-import]
 from fastapi.responses import HTMLResponse
+# pyrefly: ignore[missing-import]
 from pydantic import BaseModel, Field
 
 app = FastAPI(title="Chatbot básico", version="1.0.0")

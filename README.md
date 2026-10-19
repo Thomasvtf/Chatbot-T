@@ -12,7 +12,7 @@ python -m venv .venv
 .venv\Scripts\Activate.ps1
 # macOS/Linux: source .venv/bin/activate
 pip install -r requirements.txt
-uvicorn chatbot:app --reload
+python -m uvicorn chatbot:app --reload
 ```
 
 Abre <http://127.0.0.1:8000>. La documentación interactiva de la API está en <http://127.0.0.1:8000/docs>.
