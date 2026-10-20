@@ -2,7 +2,7 @@
 
 from typing import Dict, List
 import unicodedata
-
+from iaGenerativa import generar_respuestas
 # pyrefly: ignore[missing-import]
 from fastapi import FastAPI
 # pyrefly: ignore[missing-import]
@@ -31,8 +31,8 @@ def normalizar(texto: str) -> str:
     )
 
 
-def responder(mensaje: str) -> str:
-    """Genera una respuesta por reglas; reemplaza esta función para usar un LLM."""
+"""def responder(mensaje: str) -> str:
+    Genera una respuesta por reglas; reemplaza esta función para usar un LLM.
     texto = normalizar(mensaje)
 
     if not texto:
@@ -100,7 +100,7 @@ def responder(mensaje: str) -> str:
         return "Toda la formación ofrecida por el SENA es totalmente gratuita."
 
     return f"Entiendo. Cuéntame un poco más sobre: «{mensaje.strip()}»"
-
+"""
 
 @app.get("/", response_class=HTMLResponse)
 def pagina() -> str:
@@ -113,8 +113,10 @@ def health() -> dict:
 
 
 @app.post("/api/chat", response_model=ChatResponse)
-def chat(request: ChatRequest) -> ChatResponse:
-    return ChatResponse(reply=responder(request.message))
+async def chat(request: ChatRequest) -> ChatResponse:
+    respuesta = await generar_respuestas(request.message)
+
+    return ChatResponse(reply=respuesta)
 
 
 HTML = r"""<!doctype html>
