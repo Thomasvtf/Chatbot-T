@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chatbot básico</title>
+  <link rel="stylesheet" href="{{url_for('static', path='/css/styles.css')}}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', path='/img/logo.jpg')}}" alt="">
+        </div>
+        <div class="titulo">
+            <h1>RuneBot - SENA CENIGRAF</h1>
+        </div>
+    </header>
+    <div class="contenedor">
+        <div class="preguntas-frecuentes">
+            <h2>Preguntas frecuentes</h2> 
+            <button>¿Qué programas ofrece CENIGRAF?</button>
+            <button>¿Cuáles son los requisitos de inscrición?</button>
+            <button>¿Cómo es el proceso de matricula?</button>
+            <button>¿Dónde se encuentra CENIGRAF?</button>
+            <button>¿Cuáles son los horarios?</button>
+        </div>
+        <div class="contenedor-chat">
+            <div>
+                <h2></h2>
+            </div>
+            <div id="chat" aria-live="polite">
+                <p class="message">RuneBot: Hola. 🤖 Soy RuneBot, ¿En qué te puedo ayudar hoy?</p>
+            </div>
+            <form id="form">
+              <input id="message" autocomplete="off" placeholder="Escribe tu mensaje…" required maxlength="2000">
+              <button class="boton-enviar" type="submit">Enviar</button>
+            </form>
+        </div>
+    </div>
+  <script>
+    const chat = document.querySelector('#chat');
+    const form = document.querySelector('#form');
+    const input = document.querySelector('#message');
+    
+    function addMessage(who, text) {
+      const p = document.createElement('p');
+      p.className = 'message';
+      p.textContent = `${who}: ${text}`;
+      chat.appendChild(p);
+      chat.scrollTop = chat.scrollHeight;
+    }
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const message = input.value.trim();
+      if (!message) return;
+      addMessage('Tú', message);
+      input.value = '';
+      try {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message })
+        });
+        if (!response.ok) throw new Error('No se pudo obtener una respuesta.');
+        const data = await response.json();
+        addMessage('Bot', data.reply);
+      } catch (error) {
+        addMessage('Bot', `Error: ${error.message}`);
+      }
+    });
+  </script>
+</body>
+</html>
