@@ -19,7 +19,10 @@
   </header>
   <div class="contenedor">
     <div class="preguntas-frecuentes">
-      <h2>Preguntas frecuentes</h2>
+      <h2 class="faq-titulo">Preguntas frecuentes</h2>
+      <button class="faq-toggle" id="faq-toggle" aria-expanded="false">
+        Preguntas frecuentes <span class="faq-arrow">▼</span>
+      </button>
       <div class="botones-pf">
         <button class="btn-pf">¿Qué programas ofrece CENIGRAF?</button>
         <button class="btn-pf">¿Cuáles son los requisitos de inscrición?</button>
@@ -93,11 +96,20 @@
       }
     }
 
+    /* ── Submit del formulario ── */
     form.addEventListener('submit', (event) => {
       event.preventDefault();
       const message = input.value.trim();
       sendMessage(message);
     });
+
+    /* ── Preguntas frecuentes ── */
+    document.querySelectorAll('.btn-pf').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const pregunta = btn.textContent.trim();
+        sendMessage(pregunta);
+      });
+    }); 
 
  
   </script>
