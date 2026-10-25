@@ -50,7 +50,10 @@
     const chat = document.querySelector('#chat');
     const form = document.querySelector('#form');
     const input = document.querySelector('#message');
+    const typingIndicator = document.querySelector('#typing-indicator');
+    const GREETING = 'RuneBot: Hola. 🤖 Soy RuneBot, ¿En qué te puedo ayudar hoy?';
 
+    /* ── Agregar mensaje al chat ── */
     function addMessage(who, text) {
       const p = document.createElement('p');
       p.className = 'message';
@@ -58,25 +61,45 @@
       chat.appendChild(p);
       chat.scrollTop = chat.scrollHeight;
     }
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      const message = input.value.trim();
-      if (!message) return;
-      addMessage('Tú', message);
+
+    /* ── Mostrar / ocultar animación de escritura ── */
+    function showTyping() {
+      typingIndicator.style.display = 'flex';
+      chat.scrollTop = chat.scrollHeight;
+    }
+    function hideTyping() {
+      typingIndicator.style.display = 'none';
+    }
+
+    /* ── Enviar mensaje al bot ── */
+    async function sendMessage(text) {
+      if (!text) return;
+      addMessage('Tú', text);
       input.value = '';
+      showTyping();
       try {
         const response = await fetch('/api/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message })
+          body: JSON.stringify({ message: text })
         });
         if (!response.ok) throw new Error('No se pudo obtener una respuesta.');
         const data = await response.json();
+        hideTyping();
         addMessage('RuneBot', data.reply);
       } catch (error) {
+        hideTyping();
         addMessage('RuneBot', `Error: ${error.message}`);
       }
+    }
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const message = input.value.trim();
+      sendMessage(message);
     });
+
+ 
   </script>
 </body>
 
