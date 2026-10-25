@@ -20,11 +20,13 @@
   <div class="contenedor">
     <div class="preguntas-frecuentes">
       <h2>Preguntas frecuentes</h2>
-      <button>¿Qué programas ofrece CENIGRAF?</button>
-      <button>¿Cuáles son los requisitos de inscrición?</button>
-      <button>¿Cómo es el proceso de matricula?</button>
-      <button>¿Dónde se encuentra CENIGRAF?</button>
-      <button>¿Cuáles son los horarios?</button>
+      <div class="botones-pf">
+        <button class="btn-pf">¿Qué programas ofrece CENIGRAF?</button>
+        <button class="btn-pf">¿Cuáles son los requisitos de inscrición?</button>
+        <button class="btn-pf">¿Cómo es el proceso de matricula?</button>
+        <button class="btn-pf">¿Dónde se encuentra CENIGRAF?</button>
+        <button class="btn-pf">¿Cuáles son los horarios?</button>
+      </div>
     </div>
     <div class="contenedor-chat">
       <div>
@@ -33,9 +35,14 @@
       <div id="chat" aria-live="polite">
         <p class="message">RuneBot: Hola. 🤖 Soy RuneBot, ¿En qué te puedo ayudar hoy?</p>
       </div>
+      <div id="typing-indicator" class="typing-indicator" style="display:none;">
+        <span></span><span></span><span></span>
+        <small>RuneBot está escribiendo…</small>
+      </div>
       <form id="form">
         <input id="message" autocomplete="off" placeholder="Escribe tu mensaje…" required maxlength="2000">
-        <button class="boton-enviar" type="submit">ENVIAR<img src="/static/img/enviar.png" alt="" class="img-enviar"></button>
+        <button class="boton-enviar" type="submit">ENVIAR<img src="/static/img/enviar.png" alt=""
+            class="img-enviar"></button>
       </form>
     </div>
   </div>
