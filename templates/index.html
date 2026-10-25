@@ -111,7 +111,25 @@
       });
     }); 
 
- 
+    /* ── Limpiar chat ── */
+    document.querySelector('.button-limpiar').addEventListener('click', () => {
+      chat.innerHTML = '';
+      hideTyping();
+      const p = document.createElement('p');
+      p.className = 'message';
+      p.textContent = GREETING;
+      chat.appendChild(p);
+    });
+    /* ── Acordeón FAQ en móvil ── */
+    const faqToggle = document.getElementById('faq-toggle');
+    const botonesPf = document.querySelector('.botones-pf');
+    if (faqToggle && botonesPf) {
+      faqToggle.addEventListener('click', () => {
+        const abierto = botonesPf.classList.toggle('abierto');
+        faqToggle.classList.toggle('abierto', abierto);
+        faqToggle.setAttribute('aria-expanded', abierto);
+      });
+    }
   </script>
 </body>
 

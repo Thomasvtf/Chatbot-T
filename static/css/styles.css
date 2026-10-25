@@ -244,3 +244,172 @@ h2 {
     }
 }
 
+/* ════════════════════════════════════════
+   RESPONSIVE — Tablet y móvil (≤ 768px)
+   ════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+    /* Header más compacto */
+    header {
+        padding: 6px 10px;
+        gap: 0.6rem;
+    }
+
+    .logo img {
+        height: 60px;
+        width: 60px;
+    }
+
+    header h1 {
+        font-size: 1.1rem;
+    }
+
+    /* El contenedor pasa a columna sin salirse de la pantalla */
+    .contenedor {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        overflow: hidden;
+        gap: 0;
+        flex: 1;
+        min-height: 0;
+    }
+
+    /* Mostrar toggle y ocultar h2 en móvil */
+    .faq-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        background: none;
+        border: none;
+        color: #C29B63;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        padding: 6px 0;
+        flex-shrink: 0;
+    }
+
+    .faq-titulo {
+        display: none;
+    }
+
+    /* Preguntas frecuentes: ancho completo, no excede la pantalla */
+    .contenedor .preguntas-frecuentes {
+        flex: 0 0 auto;
+        width: 100%;
+        margin-left: 0;
+        margin-bottom: 0;
+        padding: 8px 16px;
+        box-sizing: border-box;
+        overflow-y: auto;
+        max-height: 40vh;
+    }
+
+    .faq-toggle .faq-arrow {
+        transition: transform 0.3s ease;
+        font-size: 0.8rem;
+    }
+
+    .faq-toggle.abierto .faq-arrow {
+        transform: rotate(180deg);
+    }
+
+    /* Panel de botones colapsable con scroll interno si son muchos */
+    .botones-pf {
+        max-height: 0;
+        overflow-y: auto;
+        transition: max-height 0.35s ease;
+    }
+
+    .botones-pf.abierto {
+        max-height: 220px;
+    }
+
+    /* Botones FAQ en móvil */
+    .btn-pf {
+        font-size: 14px;
+        height: auto;
+        padding: 10px 12px;
+        margin: 6px 0;
+    }
+
+    /* Chat ocupa todo el resto de la pantalla */
+    .contenedor .contenedor-chat {
+        flex: 1;
+        margin-right: 0;
+        padding: 0 10px 10px 10px;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    /* Área de mensajes: el scroll queda estrictamente aquí dentro */
+    #chat {
+        min-height: 0;
+        flex: 1;
+        overflow-y: auto;
+        margin-bottom: 0.8rem;
+    }
+
+    /* Mensaje más compacto */
+    .message {
+        padding: 12px 14px;
+        font-size: 0.92rem;
+    }
+
+    /* Botón limpiar */
+    .button-limpiar {
+        margin: 6px 0;
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+
+    /* Input y enviar */
+    input {
+        font-size: 0.9rem;
+        padding: 0.65rem;
+    }
+
+    .boton-enviar {
+        width: 80px;
+        height: 44px;
+        font-size: 0.8rem;
+        padding: 0.5rem;
+    }
+}
+
+/* ════════════════════════════════════════
+   RESPONSIVE — Móvil pequeño (≤ 480px)
+   ════════════════════════════════════════ */
+@media (max-width: 480px) {
+
+    .logo img {
+        height: 45px;
+        width: 45px;
+    }
+
+    header h1 {
+        font-size: 0.95rem;
+    }
+
+    .btn-pf {
+        font-size: 13px;
+    }
+
+    .message {
+        font-size: 0.85rem;
+        padding: 10px 12px;
+        border-radius: 0 0 20px 20px;
+    }
+
+    .boton-enviar {
+        width: 68px;
+        font-size: 0.75rem;
+    }
+
+    .img-enviar {
+        display: none;
+    }
+}
