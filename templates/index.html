@@ -25,10 +25,14 @@
       </button>
       <div class="botones-pf">
         <button class="btn-pf">¿Qué programas ofrece CENIGRAF?</button>
+
         <button class="btn-pf">¿Cuáles son los requisitos de inscrición?</button>
         <button class="btn-pf">¿Cómo es el proceso de matricula?</button>
         <button class="btn-pf">¿Dónde se encuentra CENIGRAF?</button>
         <button class="btn-pf">¿Cuáles son los horarios?</button>
+        <button class="btn-pf">Sobre CENIGRAF</button>
+        <button class="btn-pf">Contrato de aprendizaje</button>
+        <button class="btn-pf">Canales oficiales de CENIGRAF</button>
       </div>
     </div>
     <div class="contenedor-chat">
@@ -113,6 +117,9 @@
 
     /* ── Limpiar chat ── */
     document.querySelector('.button-limpiar').addEventListener('click', () => {
+      if (!confirm('¿Estás seguro de que deseas borrar o limpiar el chat?')) {
+        return;
+      }
       chat.innerHTML = '';
       hideTyping();
       const p = document.createElement('p');

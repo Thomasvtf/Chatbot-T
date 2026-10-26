@@ -185,7 +185,7 @@ input:focus {
     border-radius: 8px;
     transition: all 0.5s ease;
     font-size: 18px;
-    height:  50px;
+    padding: 20px;
 }
 
 .btn-pf:hover {
